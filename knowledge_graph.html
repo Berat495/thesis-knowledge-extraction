@@ -1,0 +1,155 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 900px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#97c2fc", "font": {"color": "black"}, "id": "dance_images_curious_commonplace_captivating", "label": "dance_images_curious_commonplace_captivating", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "flanders", "label": "flanders", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "the_four_seasons_dancing_in_the_spring", "label": "the_four_seasons_dancing_in_the_spring", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "spring", "label": "spring", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "lucas_van_valckenborch", "label": "lucas_van_valckenborch", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "when_the_organ_man_comes_to_town", "label": "when_the_organ_man_comes_to_town", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "dancing_by_the_street_organ", "label": "dancing_by_the_street_organ", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "20th_century", "label": "20th_century", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "typically_dutch", "label": "typically_dutch", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "dancing_fisherman", "label": "dancing_fisherman", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "the_versatile_pieter_jansz_quast", "label": "the_versatile_pieter_jansz_quast", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "pieter_bruegel_the_elder", "label": "pieter_bruegel_the_elder", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "david_teniers_the_bride_who_never_dances", "label": "david_teniers_the_bride_who_never_dances", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "jan_brueghel_the_elder", "label": "jan_brueghel_the_elder", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "dirck_hals", "label": "dirck_hals", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "piet_mondrian", "label": "piet_mondrian", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "art", "label": "art", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "hans_ruckers_the_elder_music", "label": "hans_ruckers_the_elder_music", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "engravings", "label": "engravings", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "pieter_nolpe", "label": "pieter_nolpe", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "17th_century", "label": "17th_century", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "village_festival_and_feast", "label": "village_festival_and_feast", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "court_dancing", "label": "court_dancing", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "chris_van_den_hoef", "label": "chris_van_den_hoef", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "organ_organ_grinder", "label": "organ_organ_grinder", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "jacob_grimmer", "label": "jacob_grimmer", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "moresca", "label": "moresca", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "willy_sluiter", "label": "willy_sluiter", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "peasant_wedding_dance", "label": "peasant_wedding_dance", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "sebastiaen_vrancx", "label": "sebastiaen_vrancx", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "adriaen_van_ostade", "label": "adriaen_van_ostade", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "david_teniers_the_younger", "label": "david_teniers_the_younger", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "adriaen_brouwer", "label": "adriaen_brouwer", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "pieter_jansz_quast", "label": "pieter_jansz_quast", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "pieter_brueghel_the_younger", "label": "pieter_brueghel_the_younger", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "dick_bruna", "label": "dick_bruna", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "kermis_in_spaander", "label": "kermis_in_spaander", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "peasant_wedding", "label": "peasant_wedding", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "dance_dancers", "label": "dance_dancers", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "willem_de_zwart", "label": "willem_de_zwart", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "willem_duyster", "label": "willem_duyster", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "19th_century", "label": "19th_century", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "rie_cramer", "label": "rie_cramer", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "matthijs_r_ling", "label": "matthijs_r_ling", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "pieter_codde", "label": "pieter_codde", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "two_dancing_amsterdam_girls", "label": "two_dancing_amsterdam_girls", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "misericord", "label": "misericord", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "henri_braakensiek", "label": "henri_braakensiek", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "piet_van_der_hem", "label": "piet_van_der_hem", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "kermis_in_volendam", "label": "kermis_in_volendam", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "children_dancing_to_the_street_musician", "label": "children_dancing_to_the_street_musician", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "frans_pourbus_the_younger", "label": "frans_pourbus_the_younger", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "15th_century", "label": "15th_century", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "pieter_van_der_heyden", "label": "pieter_van_der_heyden", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "country_celebration", "label": "country_celebration", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "spring_landscape", "label": "spring_landscape", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "jan_josef_horemans_the_elder", "label": "jan_josef_horemans_the_elder", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "jan_bleys", "label": "jan_bleys", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "an_allegory_of_spring", "label": "an_allegory_of_spring", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "stallman_pim", "label": "stallman_pim", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "adriaen_pietersz_van_de_venne", "label": "adriaen_pietersz_van_de_venne", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "abel_grimmer", "label": "abel_grimmer", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "johan_dijkstra", "label": "johan_dijkstra", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "hieronymus_francken_the_younger", "label": "hieronymus_francken_the_younger", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "the_wedding_banquet", "label": "the_wedding_banquet", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "bart_van_der_leck", "label": "bart_van_der_leck", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "george_hendrik_breitner", "label": "george_hendrik_breitner", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "johan_braakensiek", "label": "johan_braakensiek", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "barrel_organ_in_the_jordaan_amsterdam", "label": "barrel_organ_in_the_jordaan_amsterdam", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "21st_century", "label": "21st_century", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "dancing_near_the_organ", "label": "dancing_near_the_organ", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "flemish_art", "label": "flemish_art", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "delft_tango_5", "label": "delft_tango_5", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "salomon_savery", "label": "salomon_savery", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "amsterdam", "label": "amsterdam", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "16th_century", "label": "16th_century", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "isaac_israels", "label": "isaac_israels", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "basse_danse", "label": "basse_danse", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "david_vinckboons", "label": "david_vinckboons", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "fools", "label": "fools", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "18th_century", "label": "18th_century", "shape": "dot"}]);
+                  edges = new vis.DataSet([{"arrows": "to", "from": "dance_images_curious_commonplace_captivating", "label": "hasTheme", "to": "flanders"}, {"arrows": "to", "from": "the_four_seasons_dancing_in_the_spring", "label": "mentionsArtwork", "to": "spring"}, {"arrows": "to", "from": "the_four_seasons_dancing_in_the_spring", "label": "mentionsArtist", "to": "lucas_van_valckenborch"}, {"arrows": "to", "from": "when_the_organ_man_comes_to_town", "label": "mentionsArtwork", "to": "dancing_by_the_street_organ"}, {"arrows": "to", "from": "dance_images_curious_commonplace_captivating", "label": "belongsToCentury", "to": "20th_century"}, {"arrows": "to", "from": "typically_dutch", "label": "mentionsArtwork", "to": "dancing_fisherman"}, {"arrows": "to", "from": "the_versatile_pieter_jansz_quast", "label": "mentionsArtist", "to": "pieter_bruegel_the_elder"}, {"arrows": "to", "from": "david_teniers_the_bride_who_never_dances", "label": "mentionsArtist", "to": "jan_brueghel_the_elder"}, {"arrows": "to", "from": "dance_images_curious_commonplace_captivating", "label": "mentionsArtist", "to": "dirck_hals"}, {"arrows": "to", "from": "typically_dutch", "label": "mentionsArtist", "to": "piet_mondrian"}, {"arrows": "to", "from": "the_four_seasons_dancing_in_the_spring", "label": "hasTheme", "to": "art"}, {"arrows": "to", "from": "dance_images_curious_commonplace_captivating", "label": "hasTheme", "to": "hans_ruckers_the_elder_music"}, {"arrows": "to", "from": "the_versatile_pieter_jansz_quast", "label": "hasTheme", "to": "engravings"}, {"arrows": "to", "from": "the_versatile_pieter_jansz_quast", "label": "mentionsArtist", "to": "pieter_nolpe"}, {"arrows": "to", "from": "the_four_seasons_dancing_in_the_spring", "label": "belongsToCentury", "to": "17th_century"}, {"arrows": "to", "from": "david_teniers_the_bride_who_never_dances", "label": "mentionsArtwork", "to": "village_festival_and_feast"}, {"arrows": "to", "from": "dance_images_curious_commonplace_captivating", "label": "hasTheme", "to": "court_dancing"}, {"arrows": "to", "from": "dance_images_curious_commonplace_captivating", "label": "mentionsArtist", "to": "chris_van_den_hoef"}, {"arrows": "to", "from": "when_the_organ_man_comes_to_town", "label": "hasTheme", "to": "organ_organ_grinder"}, {"arrows": "to", "from": "the_four_seasons_dancing_in_the_spring", "label": "mentionsArtist", "to": "jacob_grimmer"}, {"arrows": "to", "from": "dance_images_curious_commonplace_captivating", "label": "hasTheme", "to": "moresca"}, {"arrows": "to", "from": "typically_dutch", "label": "mentionsArtist", "to": "willy_sluiter"}, {"arrows": "to", "from": "david_teniers_the_bride_who_never_dances", "label": "mentionsArtwork", "to": "peasant_wedding_dance"}, {"arrows": "to", "from": "the_four_seasons_dancing_in_the_spring", "label": "mentionsArtist", "to": "sebastiaen_vrancx"}, {"arrows": "to", "from": "the_four_seasons_dancing_in_the_spring", "label": "mentionsArtist", "to": "pieter_bruegel_the_elder"}, {"arrows": "to", "from": "the_versatile_pieter_jansz_quast", "label": "mentionsArtist", "to": "adriaen_van_ostade"}, {"arrows": "to", "from": "the_four_seasons_dancing_in_the_spring", "label": "mentionsArtist", "to": "david_teniers_the_younger"}, {"arrows": "to", "from": "the_versatile_pieter_jansz_quast", "label": "mentionsArtist", "to": "adriaen_brouwer"}, {"arrows": "to", "from": "david_teniers_the_bride_who_never_dances", "label": "mentionsArtist", "to": "pieter_bruegel_the_elder"}, {"arrows": "to", "from": "the_versatile_pieter_jansz_quast", "label": "mentionsArtist", "to": "pieter_jansz_quast"}, {"arrows": "to", "from": "david_teniers_the_bride_who_never_dances", "label": "belongsToCentury", "to": "17th_century"}, {"arrows": "to", "from": "the_four_seasons_dancing_in_the_spring", "label": "mentionsArtist", "to": "pieter_brueghel_the_younger"}, {"arrows": "to", "from": "typically_dutch", "label": "mentionsArtist", "to": "dick_bruna"}, {"arrows": "to", "from": "typically_dutch", "label": "mentionsArtwork", "to": "kermis_in_spaander"}, {"arrows": "to", "from": "david_teniers_the_bride_who_never_dances", "label": "mentionsArtist", "to": "pieter_brueghel_the_younger"}, {"arrows": "to", "from": "david_teniers_the_bride_who_never_dances", "label": "mentionsArtwork", "to": "peasant_wedding"}, {"arrows": "to", "from": "the_versatile_pieter_jansz_quast", "label": "hasTheme", "to": "dance_dancers"}, {"arrows": "to", "from": "when_the_organ_man_comes_to_town", "label": "belongsToCentury", "to": "20th_century"}, {"arrows": "to", "from": "when_the_organ_man_comes_to_town", "label": "mentionsArtist", "to": "willem_de_zwart"}, {"arrows": "to", "from": "the_versatile_pieter_jansz_quast", "label": "mentionsArtist", "to": "willem_duyster"}, {"arrows": "to", "from": "dance_images_curious_commonplace_captivating", "label": "belongsToCentury", "to": "19th_century"}, {"arrows": "to", "from": "the_four_seasons_dancing_in_the_spring", "label": "mentionsArtist", "to": "rie_cramer"}, {"arrows": "to", "from": "the_four_seasons_dancing_in_the_spring", "label": "mentionsArtist", "to": "matthijs_r_ling"}, {"arrows": "to", "from": "the_versatile_pieter_jansz_quast", "label": "mentionsArtist", "to": "pieter_codde"}, {"arrows": "to", "from": "dance_images_curious_commonplace_captivating", "label": "mentionsArtwork", "to": "two_dancing_amsterdam_girls"}, {"arrows": "to", "from": "dance_images_curious_commonplace_captivating", "label": "hasTheme", "to": "misericord"}, {"arrows": "to", "from": "when_the_organ_man_comes_to_town", "label": "mentionsArtist", "to": "henri_braakensiek"}, {"arrows": "to", "from": "when_the_organ_man_comes_to_town", "label": "mentionsArtist", "to": "piet_van_der_hem"}, {"arrows": "to", "from": "typically_dutch", "label": "mentionsArtwork", "to": "kermis_in_volendam"}, {"arrows": "to", "from": "when_the_organ_man_comes_to_town", "label": "mentionsArtwork", "to": "children_dancing_to_the_street_musician"}, {"arrows": "to", "from": "dance_images_curious_commonplace_captivating", "label": "mentionsArtist", "to": "frans_pourbus_the_younger"}, {"arrows": "to", "from": "dance_images_curious_commonplace_captivating", "label": "belongsToCentury", "to": "15th_century"}, {"arrows": "to", "from": "david_teniers_the_bride_who_never_dances", "label": "mentionsArtist", "to": "pieter_van_der_heyden"}, {"arrows": "to", "from": "david_teniers_the_bride_who_never_dances", "label": "mentionsArtwork", "to": "country_celebration"}, {"arrows": "to", "from": "the_four_seasons_dancing_in_the_spring", "label": "mentionsArtwork", "to": "spring_landscape"}, {"arrows": "to", "from": "the_four_seasons_dancing_in_the_spring", "label": "mentionsArtist", "to": "jan_josef_horemans_the_elder"}, {"arrows": "to", "from": "when_the_organ_man_comes_to_town", "label": "mentionsArtist", "to": "jan_bleys"}, {"arrows": "to", "from": "david_teniers_the_bride_who_never_dances", "label": "hasTheme", "to": "dance_dancers"}, {"arrows": "to", "from": "dance_images_curious_commonplace_captivating", "label": "hasTheme", "to": "dance_dancers"}, {"arrows": "to", "from": "the_four_seasons_dancing_in_the_spring", "label": "mentionsArtwork", "to": "an_allegory_of_spring"}, {"arrows": "to", "from": "the_four_seasons_dancing_in_the_spring", "label": "belongsToCentury", "to": "19th_century"}, {"arrows": "to", "from": "typically_dutch", "label": "belongsToCentury", "to": "19th_century"}, {"arrows": "to", "from": "typically_dutch", "label": "mentionsArtist", "to": "stallman_pim"}, {"arrows": "to", "from": "the_versatile_pieter_jansz_quast", "label": "mentionsArtist", "to": "adriaen_pietersz_van_de_venne"}, {"arrows": "to", "from": "the_four_seasons_dancing_in_the_spring", "label": "mentionsArtist", "to": "abel_grimmer"}, {"arrows": "to", "from": "when_the_organ_man_comes_to_town", "label": "mentionsArtist", "to": "johan_dijkstra"}, {"arrows": "to", "from": "dance_images_curious_commonplace_captivating", "label": "mentionsArtist", "to": "hieronymus_francken_the_younger"}, {"arrows": "to", "from": "david_teniers_the_bride_who_never_dances", "label": "mentionsArtwork", "to": "the_wedding_banquet"}, {"arrows": "to", "from": "when_the_organ_man_comes_to_town", "label": "belongsToCentury", "to": "19th_century"}, {"arrows": "to", "from": "when_the_organ_man_comes_to_town", "label": "mentionsArtist", "to": "bart_van_der_leck"}, {"arrows": "to", "from": "typically_dutch", "label": "hasTheme", "to": "dance_dancers"}, {"arrows": "to", "from": "david_teniers_the_bride_who_never_dances", "label": "hasTheme", "to": "art"}, {"arrows": "to", "from": "dance_images_curious_commonplace_captivating", "label": "mentionsArtist", "to": "george_hendrik_breitner"}, {"arrows": "to", "from": "typically_dutch", "label": "mentionsArtist", "to": "johan_braakensiek"}, {"arrows": "to", "from": "when_the_organ_man_comes_to_town", "label": "mentionsArtwork", "to": "barrel_organ_in_the_jordaan_amsterdam"}, {"arrows": "to", "from": "typically_dutch", "label": "belongsToCentury", "to": "21st_century"}, {"arrows": "to", "from": "when_the_organ_man_comes_to_town", "label": "mentionsArtwork", "to": "dancing_near_the_organ"}, {"arrows": "to", "from": "david_teniers_the_bride_who_never_dances", "label": "hasTheme", "to": "flemish_art"}, {"arrows": "to", "from": "the_four_seasons_dancing_in_the_spring", "label": "mentionsArtist", "to": "pieter_van_der_heyden"}, {"arrows": "to", "from": "typically_dutch", "label": "mentionsArtwork", "to": "delft_tango_5"}, {"arrows": "to", "from": "the_versatile_pieter_jansz_quast", "label": "mentionsArtist", "to": "salomon_savery"}, {"arrows": "to", "from": "when_the_organ_man_comes_to_town", "label": "hasTheme", "to": "amsterdam"}, {"arrows": "to", "from": "the_four_seasons_dancing_in_the_spring", "label": "belongsToCentury", "to": "20th_century"}, {"arrows": "to", "from": "the_four_seasons_dancing_in_the_spring", "label": "hasTheme", "to": "dance_dancers"}, {"arrows": "to", "from": "typically_dutch", "label": "belongsToCentury", "to": "20th_century"}, {"arrows": "to", "from": "david_teniers_the_bride_who_never_dances", "label": "belongsToCentury", "to": "16th_century"}, {"arrows": "to", "from": "dance_images_curious_commonplace_captivating", "label": "mentionsArtist", "to": "isaac_israels"}, {"arrows": "to", "from": "dance_images_curious_commonplace_captivating", "label": "hasTheme", "to": "basse_danse"}, {"arrows": "to", "from": "david_teniers_the_bride_who_never_dances", "label": "mentionsArtist", "to": "david_teniers_the_younger"}, {"arrows": "to", "from": "dance_images_curious_commonplace_captivating", "label": "belongsToCentury", "to": "16th_century"}, {"arrows": "to", "from": "dance_images_curious_commonplace_captivating", "label": "belongsToCentury", "to": "17th_century"}, {"arrows": "to", "from": "dance_images_curious_commonplace_captivating", "label": "mentionsArtist", "to": "david_vinckboons"}, {"arrows": "to", "from": "the_versatile_pieter_jansz_quast", "label": "belongsToCentury", "to": "17th_century"}, {"arrows": "to", "from": "typically_dutch", "label": "hasTheme", "to": "art"}, {"arrows": "to", "from": "the_versatile_pieter_jansz_quast", "label": "hasTheme", "to": "fools"}, {"arrows": "to", "from": "the_four_seasons_dancing_in_the_spring", "label": "belongsToCentury", "to": "18th_century"}, {"arrows": "to", "from": "when_the_organ_man_comes_to_town", "label": "hasTheme", "to": "dance_dancers"}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

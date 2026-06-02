@@ -1,0 +1,12 @@
+@prefix ex: <http://example.org/artdance/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ex:BlogPost a rdfs:Class .
+ex:Artist a rdfs:Class .
+ex:Century a rdfs:Class .
+ex:Theme a rdfs:Class .
+
+ex:mentionsArtist a rdf:Property .
+ex:belongsToCentury a rdf:Property .
+ex:hasTheme a rdf:Property .
+ex:content a rdf:Property .
