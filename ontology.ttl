@@ -1,12 +1,69 @@
 @prefix ex: <http://example.org/artdance/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ex:BlogPost a rdfs:Class .
-ex:Artist a rdfs:Class .
-ex:Century a rdfs:Class .
-ex:Theme a rdfs:Class .
+ex:BlogPost a rdfs:Class ;
+    rdfs:label "Blog Post" .
 
-ex:mentionsArtist a rdf:Property .
-ex:belongsToCentury a rdf:Property .
-ex:hasTheme a rdf:Property .
-ex:content a rdf:Property .
+ex:Artist a rdfs:Class ;
+    rdfs:label "Artist" .
+
+ex:Artwork a rdfs:Class ;
+    rdfs:label "Artwork" .
+
+ex:DanceType a rdfs:Class ;
+    rdfs:label "Dance Type" .
+
+ex:Century a rdfs:Class ;
+    rdfs:label "Century" .
+
+ex:Museum a rdfs:Class ;
+    rdfs:label "Museum" .
+
+ex:Theme a rdfs:Class ;
+    rdfs:label "Theme" .
+
+ex:mentionsArtist a rdf:Property ;
+    rdfs:domain ex:BlogPost ;
+    rdfs:range ex:Artist ;
+    rdfs:label "mentions artist" .
+
+ex:mentionsArtwork a rdf:Property ;
+    rdfs:domain ex:BlogPost ;
+    rdfs:range ex:Artwork ;
+    rdfs:label "mentions artwork" .
+
+ex:createdBy a rdf:Property ;
+    rdfs:domain ex:Artwork ;
+    rdfs:range ex:Artist ;
+    rdfs:label "created by" .
+
+ex:depictsDance a rdf:Property ;
+    rdfs:domain ex:Artwork ;
+    rdfs:range ex:DanceType ;
+    rdfs:label "depicts dance" .
+
+ex:belongsToCentury a rdf:Property ;
+    rdfs:range ex:Century ;
+    rdfs:label "belongs to century" .
+
+ex:locatedInMuseum a rdf:Property ;
+    rdfs:domain ex:Artwork ;
+    rdfs:range ex:Museum ;
+    rdfs:label "located in museum" .
+
+ex:hasTheme a rdf:Property ;
+    rdfs:range ex:Theme ;
+    rdfs:label "has theme" .
+
+ex:hasNumberOfDancers a rdf:Property ;
+    rdfs:domain ex:Artwork ;
+    rdfs:label "has number of dancers" .
+
+ex:sourceUrl a rdf:Property ;
+    rdfs:domain ex:BlogPost ;
+    rdfs:label "source URL" .
+
+ex:content a rdf:Property ;
+    rdfs:domain ex:BlogPost ;
+    rdfs:label "content" .
