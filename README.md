@@ -1,104 +1,73 @@
-# Thesis Knowledge Extraction
+# Ontology-Guided Knowledge Graph Construction from Art and Dance Blog Posts
 
-## Project Overview
+## Overview
 
-This project investigates how information about dance depicted in visual art can be extracted from unstructured blog texts and converted into RDF knowledge graph data.
+This repository contains the implementation developed for my Bachelor's thesis at Vrije Universiteit Amsterdam.
 
-The project uses the blog:
+The project presents a complete pipeline for transforming unstructured cultural heritage blog posts into RDF knowledge graphs using ontology-guided prompt engineering.
 
-https://artanddance.art.blog/
+The pipeline consists of:
 
-as a case study.
-
-The final goal is to build a pipeline that automatically extracts structured information from art-related texts and represents this information as RDF triples in a knowledge graph.
-
----
-
-## Research Question
-
-How can prompt engineering be used to automatically extract information about dance depicted in visual art from unstructured blog texts and convert this information into RDF knowledge graph data?
-
----
-
-## Current Pipeline
-
-Blog Posts
-↓
-Web Scraper
-↓
-Text Extraction
-↓
-Entity Detection
-↓
-RDF Generator
-↓
-Knowledge Graph
+- Web scraping
+- Information extraction using Large Language Models
+- Ontology-guided prompting
+- RDF generation using RDFLib
+- Knowledge graph construction
+- Knowledge graph visualisation
 
 ---
 
 ## Repository Structure
 
-artdance-rdf-project/
+```
+data/
+    posts.json
+    artdance.ttl
 
-├── scraper.py
+experiments/
+    Prompt A
+    Prompt B
+    Prompt C
 
-├── collect_posts.py
-
-├── rdf_generator.py
-
-├── ontology.py
-
-├── visualize_graph.py
-
-├── query_test.py
-
-├── ontology.ttl
-
-├── data/
-
-│ ├── posts.json
-
-│ └── artdance.ttl
-
-└── knowledge_graph.html
+collect_posts.py
+create_rdf.py
+ontology.py
+ontology.ttl
+rdf_generator.py
+query_test.py
+visualize_graph.py
+README.md
+requirements.txt
+```
 
 ---
 
-## Implemented Features
+## Pipeline
 
-- Web scraping of blog posts
-- Text extraction
-- RDF generation using RDFLib
-- Ontology prototype
-- Knowledge graph visualization using PyVis
-- SPARQL querying
+1. Collect blog posts
+2. Extract entities using prompt engineering
+3. Map extracted entities to ontology classes
+4. Generate RDF triples
+5. Export Turtle (.ttl)
+6. Visualise the RDF graph
 
 ---
 
 ## Technologies
 
 - Python
-- BeautifulSoup
 - RDFLib
-- SPARQL
+- BeautifulSoup
 - PyVis
+- NetworkX
+- OpenAI API
 
 ---
 
-## Future Work
+## Thesis
 
-- Prompt engineering with Large Language Models
-- Automatic entity extraction
-- Ontology refinement
-- Evaluation against manually annotated data
-- Knowledge graph quality assessment
-
----
-
-## Author
-
-Berat Kirtis
+Bachelor Thesis
 
 Vrije Universiteit Amsterdam
 
-Artificial Intelligence
+2026
